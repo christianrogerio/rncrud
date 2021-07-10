@@ -10,6 +10,8 @@ import { BorderlessButton } from 'react-native-gesture-handler'
 import {Button, Icon} from 'react-native-elements'
 import {UsersProvider} from './context/UserContext'
 
+import {Lapis} from './src/Lapis'
+
 const Stack = createStackNavigator()
 
 export default props => {

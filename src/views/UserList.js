@@ -1,19 +1,39 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import {Text, View, FlatList, Alert} from 'react-native'
 import { ListItem, Avatar , Button, Icon} from 'react-native-elements'
 import UsersContext from '../context/UserContext'
 //import users from '../data/users'
 
+
 export default props => {
 
     const {state} = useContext(UsersContext)
+
+    const [data, setData]=useState(state.users);
     //console.warn(Object.keys(ctx.state.users[0]))
 
+
+    function deletarUser(user){
+        const apagar=user; 
+        state.users = state.users.filter(person => person.id != apagar.id);   
+        setData(state.users)
+        console.warn(JSON.stringify(state.users) )  
+        /*
+        s=''
+        state.users.forEach(function (item, index) {
+            if(user.id == item.id){
+                state.users.splice(index,1);
+                s='removeu '+item.id
+            }
+        });
+        console.warn(s)
+        */
+    }
 
     function confirmUserDeletion(user){
         Alert.alert('Excluir Usuário','Deseja excluir mesmo?',[
             {text: 'Sim',onPress(){
-                console.warn('excluiu '+user.id)
+                deletarUser(user)
             }},
             {text:'Não'}
         ])
@@ -72,6 +92,6 @@ export default props => {
        // return <Text>{user.name} - {user.email}</Text>
     }
     return (
-        <FlatList keyExtractor={user=> user.id.toString()} data={state.users} renderItem={getUserItem} />
+        <FlatList keyExtractor={user=> user.id.toString()} data={data} renderItem={getUserItem} />
     )
 }
